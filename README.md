@@ -1,2 +1,4 @@
 # plaintext
-Tools to extract plaintext from computer code and markup
+Extract hunman languages in plain UTF-8 text from computer code and markup
+
+
