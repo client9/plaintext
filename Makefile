@@ -22,8 +22,8 @@ ci: install lint test
 docker-ci:
 	docker run --rm \
 		-e COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN \
-		-v $(PWD):/go/src/github.com/client9/misspell \
-		-w /go/src/github.com/client9/misspell \
+		-v $(PWD):/go/src/github.com/client9/plaintext \
+		-w /go/src/github.com/client9/plaintext \
 		nickg/golang-dev-docker \
 		make ci
 
