@@ -6,8 +6,8 @@ import (
 
 // Options specifies options for formatting.
 type MarkdownText struct {
-	Extensions       int
-	Extractor       Extractor
+	Extensions int
+	Extractor  Extractor
 }
 
 // MarkdownText returns plaintext from a markdown file
