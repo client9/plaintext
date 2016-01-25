@@ -2,8 +2,7 @@
 all: install lint test
 
 install:
-	go get -u github.com/russross/blackfriday
-	go get -u golang.org/x/net/html
+	go get ./...
 	go install ./...
 
 lint:
