@@ -5,15 +5,18 @@ import (
 	"golang.org/x/net/html"
 )
 
+// HTMLText extracts plain text from HTML markup
 type HTMLText struct {
 	InspectImageAlt bool
 }
 
+// InspectImageAlt is a sample for options  WIP
 func InspectImageAlt(opt *HTMLText) error {
 	opt.InspectImageAlt = true
 	return nil
 }
 
+// NewHTMLText creates a new HTMLText extractor, using options.
 func NewHTMLText(options ...func(*HTMLText) error) (*HTMLText, error) {
 	extractor := HTMLText{}
 	for _, option := range options {
@@ -25,6 +28,7 @@ func NewHTMLText(options ...func(*HTMLText) error) (*HTMLText, error) {
 	return &extractor, nil
 }
 
+// Text satifies the plaintext.Extractor interface
 func (p *HTMLText) Text(raw []byte) []byte {
 	isCodeTag := false
 	isStyleTag := false

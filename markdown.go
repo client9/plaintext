@@ -4,13 +4,13 @@ import (
 	"github.com/russross/blackfriday"
 )
 
-// Options specifies options for formatting.
+// MarkdownText extracts plain text from markdown sources
 type MarkdownText struct {
 	Extensions int
 	Extractor  Extractor
 }
 
-// MarkdownText returns plaintext from a markdown file
+// NewMarkdownText creates a new extractor
 func NewMarkdownText(options ...func(*MarkdownText) error) (*MarkdownText, error) {
 	// Default is GitHub Flavored Markdown-like extensions.
 	extensions := 0
@@ -43,6 +43,7 @@ func NewMarkdownText(options ...func(*MarkdownText) error) (*MarkdownText, error
 	return &processor, nil
 }
 
+// Text satifies the extractor.Text interface
 func (p *MarkdownText) Text(text []byte) []byte {
 	mp := blackfriday.HtmlRenderer(0, "", "")
 	out := blackfriday.Markdown(text, mp, p.Extensions)
