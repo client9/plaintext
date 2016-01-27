@@ -5,6 +5,25 @@ import (
 	"golang.org/x/net/html"
 )
 
+var blockTag = map[string]struct{}{
+	"br":         {},
+	"h1":         {},
+	"h2":         {},
+	"h3":         {},
+	"h4":         {},
+	"h5":         {},
+	"pre":        {},
+	"li":         {},
+	"p":          {},
+	"div":        {},
+	"blockquote": {},
+}
+
+func isBlock(tag []byte) bool {
+	_, ok := blockTag[string(tag)]
+	return ok
+}
+
 // HTMLText extracts plain text from HTML markup
 type HTMLText struct {
 	InspectImageAlt bool
@@ -79,6 +98,9 @@ func (p *HTMLText) Text(raw []byte) []byte {
 			if bytes.Equal(tn, []byte("script")) {
 				isScriptTag = false
 				continue
+			}
+			if isBlock(tn) {
+				out.Write([]byte("\n"))
 			}
 		case html.TextToken:
 			if isCodeTag || isStyleTag || isScriptTag {
