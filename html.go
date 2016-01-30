@@ -24,6 +24,16 @@ func isBlock(tag []byte) bool {
 	return ok
 }
 
+// count number of newlines in a text block
+func countNewlines(raw []byte) int {
+	count := 0
+	for idx := bytes.IndexByte(raw, '\n'); idx != -1 && idx < len(raw); raw = raw[idx:] {
+		count++
+		idx++
+	}
+	return count
+}
+
 // HTMLText extracts plain text from HTML markup
 type HTMLText struct {
 	InspectImageAlt bool
@@ -60,7 +70,7 @@ func (p *HTMLText) Text(raw []byte) []byte {
 		tt := z.Next()
 		switch tt {
 		case html.ErrorToken:
-			return bytes.TrimSpace(out.Bytes())
+			return out.Bytes()
 		case html.StartTagToken:
 			tn, hasAttr := z.TagName()
 			if bytes.Equal(tn, []byte("code")) {
@@ -99,17 +109,13 @@ func (p *HTMLText) Text(raw []byte) []byte {
 				isScriptTag = false
 				continue
 			}
-			if isBlock(tn) {
-				out.Write([]byte("\n"))
-			}
 		case html.TextToken:
 			if isCodeTag || isStyleTag || isScriptTag {
+				// we want to perserve the line count
+				out.Write(bytes.Repeat([]byte{'\n'}, countNewlines(z.Text())))
 				continue
 			}
-			if plaintext := bytes.TrimSpace(z.Text()); len(plaintext) > 0 {
-				out.Write(plaintext)
-				out.Write([]byte(" "))
-			}
+			out.Write([]byte(z.Text()))
 		}
 	}
 }

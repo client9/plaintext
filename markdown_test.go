@@ -9,23 +9,26 @@ func TestMD(t *testing.T) {
 		text string
 		want string
 	}{
-		{"\nfoo bar\n", "foo bar"},
-		{"\nfoo\nbar\n", "foo\nbar"},
+		{"\nfoo bar\n", "\nfoo bar\n"},
+		{"\nfoo bar\n", "\nfoo bar\n"},
+		{"\n\nfoo bar\n", "\n\nfoo bar\n"},
+		{"\nfoo\nbar\n", "\nfoo\nbar\n"},
+		{"\nfoo\n\nbar\n", "\nfoo\n\nbar\n"},
 		{"*italic*", "italic"},
 		{"**bold**", "bold"},
 		{"_emphasis_", "emphasis"},
 		{"**combo _text_**", "combo text"},
 		{"~~strike~~", "strike"},
-		{"# heading1", "heading1"},
+		{"# heading1\nfoo", "heading1\nfoo"},
 
 		// in-line code should be ignored
-		{"first `middle` last", "first last"},
+		{"first `middle` last", "first  last"},
 
 		// auto-links really should be ignore, but they get removed in plain-text tokenizer
-		{"first http://foobar.com/apple last ", "first http://foobar.com/apple last"},
+		{"first http://foobar.com/apple last ", "first http://foobar.com/apple last "},
 
 		// links
-		{"foo\n[hello world](http://foobar.com/apple) foo ", "foo hello world foo"},
+		{"foo\n[hello world](http://foobar.com/apple) foo ", "foo\nhello world foo "},
 		{"[Visit GitHub!](https://www.github.com)", "Visit GitHub!"},
 
 		// images
@@ -33,10 +36,10 @@ func TestMD(t *testing.T) {
 		{"![GitHub Logo](/images/logo.png)", "GitHub Logo"},
 
 		// code blocks
-		{"```\ncode\n```\nfoo", "foo"},
+		{"```\ncode\n```\nnotcode", "\n\n\nnotcode"},
 
 		// blockquote
-		{"> foo\n> bar\n", "foo\nbar"},
+		{"> blockquote1\n> blockquote2\n", "blockquote1\nblockquote2\n"},
 
 		// entity
 		{"&lt;", "<"},
