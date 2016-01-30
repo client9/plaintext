@@ -3,4 +3,19 @@
 
 Extract human languages in plain UTF-8 text from computer code and markup
 
+The output is (or should be) *line-preserving*, meaning, no new lines are added or subtracted.
+
+```html
+<p>
+foo
+</p>
+```
+
+becomes
+
+```html
+
+foo
+
+```
 
