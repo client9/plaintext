@@ -2,7 +2,6 @@ package plaintext
 
 import (
 	"bytes"
-	"strings"
 	"text/scanner"
 )
 
@@ -29,8 +28,8 @@ func NewGolangText() (*GolangText, error) {
 //
 func (p *GolangText) Text(raw []byte) []byte {
 	out := bytes.Buffer{}
-	var s scanner.Scanner
-	s.Init(strings.NewReader(string(raw)))
+	s := scanner.Scanner{}
+	s.Init(bytes.NewReader(raw))
 	s.Mode = scanner.ScanIdents | scanner.ScanFloats | scanner.ScanChars | scanner.ScanStrings | scanner.ScanRawStrings | scanner.ScanComments
 	for {
 		switch s.Scan() {
