@@ -23,7 +23,7 @@ func ExtractorByFilename(filename string) (Extractor, error) {
 		e, err = NewMarkdownText()
 	case "html":
 		e, err = NewHTMLText()
-	case "go", "h", "c", "java":
+	case "go", "h", "c", "java", "hxx", "cxx":
 		e, err = NewGolangText()
 	default:
 		e, err = NewIdentity()
