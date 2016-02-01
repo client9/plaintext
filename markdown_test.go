@@ -45,11 +45,12 @@ func TestMD(t *testing.T) {
 		{"&lt;", "<"},
 	}
 
+	mt, err := NewMarkdownText()
+	if err != nil {
+		t.Fatalf("Unable to run test: %s", err)
+	}
+
 	for pos, tt := range cases {
-		mt, err := NewMarkdownText()
-		if err != nil {
-			t.Fatalf("Unable to run test: %s", err)
-		}
 		got := string(mt.Text([]byte(tt.text)))
 		if tt.want != got {
 			t.Errorf("Test %d failed:  want %q, got %q", pos, tt.want, got)
