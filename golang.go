@@ -6,6 +6,10 @@ import (
 )
 
 // GolangText extracts plaintext from Golang and other similar C or Java like files
+//
+// Need to study.   https://godoc.org/github.com/fluhus/godoc-tricks
+//  Does not process embedded code blocks
+//
 type GolangText struct {
 }
 
@@ -30,6 +34,7 @@ func (p *GolangText) Text(raw []byte) []byte {
 	out := bytes.Buffer{}
 	s := scanner.Scanner{}
 	s.Init(bytes.NewReader(raw))
+	s.Error = (func(s *scanner.Scanner, msg string) {})
 	s.Mode = scanner.ScanIdents | scanner.ScanFloats | scanner.ScanChars | scanner.ScanStrings | scanner.ScanRawStrings | scanner.ScanComments
 	for {
 		switch s.Scan() {
