@@ -1,6 +1,7 @@
 package plaintext
 
 import (
+	"errors"
 	"strings"
 )
 
@@ -19,16 +20,18 @@ func ExtractorByFilename(filename string) (Extractor, error) {
 	var e Extractor
 	var err error
 	switch getSuffix(filename) {
-	case "md":
+	case "md", "markdown":
 		e, err = NewMarkdownText()
 	case "html":
 		e, err = NewHTMLText()
-	case "go", "h", "c", "java", "hxx", "cxx":
+	case "go", "h", "c", "java", "hxx", "cxx", "js":
 		e, err = NewGolangText()
 	case "py", "sh", "pl", "Makefile", "Dockerfile":
 		e, err = NewScriptText()
-	default:
+	case "txt":
 		e, err = NewIdentity()
+	default:
+		err = errors.New("unknown file type")
 	}
 	if err != nil {
 		return nil, err
