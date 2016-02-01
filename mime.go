@@ -25,6 +25,8 @@ func ExtractorByFilename(filename string) (Extractor, error) {
 		e, err = NewHTMLText()
 	case "go", "h", "c", "java", "hxx", "cxx":
 		e, err = NewGolangText()
+	case "py", "sh", "pl", "Makefile", "Dockerfile":
+		e, err = NewScriptText()
 	default:
 		e, err = NewIdentity()
 	}
