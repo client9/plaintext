@@ -28,7 +28,7 @@ func ExtractorByFilename(filename string) (Extractor, error) {
 		e, err = NewGolangText()
 	case "py", "sh", "pl", "Makefile", "Dockerfile":
 		e, err = NewScriptText()
-	case "txt":
+	case "txt", "stdin":
 		e, err = NewIdentity()
 	default:
 		err = errors.New("unknown file type")
