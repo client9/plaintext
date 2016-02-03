@@ -11,6 +11,9 @@ var blockQuote = regexp.MustCompile("^>[ >]*")
 var leadingHeadline = regexp.MustCompile("^ *#+ *")
 var trailingHeadline = regexp.MustCompile(" *#+ *$")
 
+// code fences can have leading whitespace apparently
+var codeFence = regexp.MustCompile("^\\s*```")
+
 // single line, single backquote code snippet
 // this is the most common case although markdown
 // apparently supports ``...`\n\n....`` style multi-line
@@ -89,7 +92,7 @@ func (p *MarkdownText) Text(text []byte) []byte {
 			buf.WriteByte('\n')
 		}
 
-		if bytes.HasPrefix(line, []byte{'`', '`', '`'}) {
+		if codeFence.Match(line) {
 			inCodeFence = !inCodeFence
 			continue
 		}

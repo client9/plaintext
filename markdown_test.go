@@ -35,8 +35,11 @@ func TestMD(t *testing.T) {
 		{"![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)", "Image of Yaktocat"},
 		{"![GitHub Logo](/images/logo.png)", "GitHub Logo"},
 
-		// code blocks
+		// code fense
 		{"```\ncode\n```\nnotcode", "\n\n\nnotcode"},
+
+		// indented code fence
+		{"    ```\ncode\n    ```\nnotcode", "\n\n\nnotcode"},
 
 		// blockquote
 		{"> blockquote1\n> blockquote2\n", "blockquote1\nblockquote2\n"},
