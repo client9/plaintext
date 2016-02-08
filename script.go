@@ -28,9 +28,8 @@ func (p *ScriptText) Text(text []byte) []byte {
 
 		// BUG: if '#' is in a string
 		if idx := bytes.IndexByte(line, '#'); idx != -1 {
-			line = line[0:idx]
+			buf.Write(line[idx:])
 		}
-		buf.Write(line)
 	}
 	return buf.Bytes()
 }

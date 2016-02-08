@@ -9,8 +9,8 @@ func TestScript(t *testing.T) {
 		text string
 		want string
 	}{
-		{"\nfoo1\n# line2bar\nfoo3", "\nfoo1\n\nfoo3"},
-		{"\nfoo1\nline2# bar\nfoo3", "\nfoo1\nline2\nfoo3"},
+		{"\nfoo1\n# line2bar\nfoo3", "\n\n# line2bar\n"},
+		{"\nfoo1\nline2# bar\nfoo3", "\n\n# bar\n"},
 	}
 	mt, err := NewScriptText()
 	if err != nil {
