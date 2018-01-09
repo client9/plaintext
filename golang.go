@@ -18,7 +18,7 @@ func NewGolangText() (*GolangText, error) {
 	return &GolangText{}, nil
 }
 
-// Text satifies the Extractor interface
+// Text satisfies the Extractor interface
 //
 //ReplaceGo is a specialized routine for correcting Golang source
 // files.  Currently only checks comments, not identifiers for

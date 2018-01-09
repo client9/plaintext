@@ -9,7 +9,7 @@ func NewIdentity() (*Identity, error) {
 	return &Identity{}, nil
 }
 
-// Text satifies the plaintext.Extractor interface
+// Text satisfies the plaintext.Extractor interface
 func (p *Identity) Text(raw []byte) []byte {
 	return raw
 }

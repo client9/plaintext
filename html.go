@@ -57,7 +57,7 @@ func NewHTMLText(options ...func(*HTMLText) error) (*HTMLText, error) {
 	return &extractor, nil
 }
 
-// Text satifies the plaintext.Extractor interface
+// Text satisfies the plaintext.Extractor interface
 func (p *HTMLText) Text(raw []byte) []byte {
 	isCodeTag := false
 	isStyleTag := false
@@ -111,7 +111,7 @@ func (p *HTMLText) Text(raw []byte) []byte {
 			}
 		case html.TextToken:
 			if isCodeTag || isStyleTag || isScriptTag {
-				// we want to perserve the line count
+				// we want to preserve the line count
 				out.Write(bytes.Repeat([]byte{'\n'}, countNewlines(z.Text())))
 				continue
 			}
