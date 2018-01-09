@@ -11,6 +11,8 @@ import (
 
 func main() {
 	extension := flag.String("s", "", "over-ride file suffix to determine parser")
+	collapse := flag.Bool("c", false, "collapse whitespace")
+
 	flag.Parse()
 	ext := *extension
 	if ext != "" && ext[0] != '.' {
@@ -30,7 +32,11 @@ func main() {
 		}
 
 		raw = plaintext.StripTemplate(raw)
-		os.Stdout.Write(md.Text(raw))
+		raw = md.Text(raw)
+		if *collapse {
+			raw = plaintext.CollapseWhitespace(raw)
+		}
+		os.Stdout.Write(raw)
 	}
 
 	for _, arg := range args {
@@ -44,7 +50,11 @@ func main() {
 		}
 
 		raw = plaintext.StripTemplate(raw)
-		os.Stdout.Write(md.Text(raw))
+		raw = md.Text(raw)
+		if *collapse {
+			raw = plaintext.CollapseWhitespace(raw)
+		}
+		os.Stdout.Write(raw)
 		os.Stdout.Write([]byte{'\n'})
 	}
 }
