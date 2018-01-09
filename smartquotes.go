@@ -8,7 +8,7 @@ var toStraight *strings.Replacer
 var toCurly *strings.Replacer
 
 func init() {
-	convertions := []string{
+	conversions := []string{
 		"\u2013", "-", // en dash
 		"\u2014", "-", // em dash
 		"\u2018", "'", // left single quotation mark
@@ -16,11 +16,11 @@ func init() {
 		"\u201C", "\"", // left double quotation mark
 		"\u201D", "\"", // right double quotation mark
 	}
-	toStraight = strings.NewReplacer(conversions)
+	toStraight = strings.NewReplacer(conversions...)
 }
 
 // StraightQuotes converts maybe fancy typographical characters into their
 // ASCII equivalent
 func StraightQuotes(s string) string {
-	return toStraight(s)
+	return toStraight.Replace(s)
 }
